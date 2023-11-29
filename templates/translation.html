@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Ubuntu:ital,wght@1,300&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech Translation</title>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 12px #aaa;
+      
+      }
+
+      video {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: rgb(2, 2, 54);
+        color: white;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .btn {
+        padding: 10px 35px;
+        background-color: white;
+        border: 3px solid white;
+        border-radius: 30px;
+        color: rgb(6, 6, 46);
+        font-size: 20px;
+        cursor: pointer;
+        margin: 30px 5px;
+      }
+
+      #videoInput {
+        border: none;
+      }
+
+      #sourceLang {
+        padding: 10px 35px;
+        background-color: white;
+        border: 3px solid white;
+        border-radius: 30px;
+        color: rgb(6, 6, 46);
+        font-size: 20px;
+        cursor: pointer;
+        margin: 30px 5px;
+      }
+
+      #targetLang {
+        padding: 10px 35px;
+        background-color: white;
+        border: 3px solid white;
+        border-radius: 30px;
+        color: rgb(6, 6, 46);
+        font-size: 20px;
+        cursor: pointer;
+        margin: 30px 5px;
+      }
+
+      .widget-input {
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 16px;
+        border: none;
+      }
+
+      .widget-input::placeholder {
+        color: #b62424;
+        font-style: italic;
+      }
+
+      .widget-input:focus {
+        border-color: #007bff;
+        outline: none; /* Removes the default browser outline */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Speech Translation</h1>
+      <div class="input-widget">
+        <button class="btn">
+          <input
+            class="widget-input"
+            type="file"
+            id="videoInput"
+            accept="video/*"
+          />
+        </button>
+      </div>
+
+      <select id="sourceLang">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="es">Urdu</option>
+        <option value="es">Spanish</option>
+        <!-- Add other languages here -->
+      </select>
+
+      <select id="targetLang">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <!-- Add other languages here -->
+      </select>
+
+      <button class="btn" onclick="translateVideo()">Translate</button>
+      <video id="translatedVideo" controls></video>
+    </div>
+
+    <script>
+      function translateVideo() {
+        const videoInput = document.getElementById("videoInput");
+        const sourceLang = document.getElementById("sourceLang").value;
+        const targetLang = document.getElementById("targetLang").value;
+
+        // A placeholder, real translation would require complex integration
+        if (videoInput.files.length > 0) {
+          const translatedURL = URL.createObjectURL(videoInput.files[0]); // Using the original video as a placeholder
+          document.getElementById("translatedVideo").src = translatedURL;
+
+          // Ideally, you'd send the video to a backend server which:
+          // 1. Extracts audio
+          // 2. Uses a service like Google Cloud Speech-to-Text to transcribe
+          // 3. Translates the transcription using something like Google Cloud Translation API
+          // 4. Uses Text-to-Speech to generate new audio in the target language
+          // 5. Combines the new audio with the original video
+          // 6. Sends the combined video back to be displayed
+        }
+      }
+    </script>
+  </body>
+</html>
