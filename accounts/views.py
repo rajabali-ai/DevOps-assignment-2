@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
+from .forms import uploaded_videoForm
+from .models import uploaded_video
+from django.contrib.auth.decorators import login_required
+
 
 def user_register(request):
     if request.method == 'POST':
@@ -12,20 +16,6 @@ def user_register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.email = form.cleaned_data.get('email')
-#             user.save()
-#             login(request, user)
-#             return redirect('dashboard')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'register.html', {'form': form})
-
 
 
 def home(request):
@@ -47,8 +37,23 @@ def user_login(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+
+@login_required
 def translation(request):
-    return render(request, 'translation.html')
+    videos = uploaded_video.objects.filter(user=request.user)
+    if request.method == 'POST':
+        form = uploaded_videoForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = form.save(commit=False)
+            video.user = request.user
+            video.save()
+            return redirect('trans.html') 
+    else:
+        form = uploaded_videoForm()
+    return render(request, 'trans.html', {'form': form, 'videos': videos})
+
+
 
 def chatbot(request):
     return render(request, 'chatbot.html')
+
